@@ -1,6 +1,8 @@
 package com.example.theroos.speechtotext
 
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -34,6 +36,11 @@ class MainActivity : AppCompatActivity() {
             val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             val txtext = findViewById<TextView>(R.id.tv_test)
             txtext.text = result?.get(0).toString()
+
+            val clipboard : ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            val clip : ClipData = ClipData.newPlainText("Speech",result?.get(0).toString())
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(this,"Copied to Clipboard",Toast.LENGTH_LONG).show()
         }
     }
 
